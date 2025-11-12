@@ -13,10 +13,10 @@ type ButtonProps = {
 export const Button = ({ children, className, disabled, active, onClick, variant = 'primary' }: ButtonProps) => {
 
     const variants: Record<string, string> = {
-        'primary': 'bg-[var(--foreground)] text-white active:brightness-90',
+        'primary': 'bg-[var(--primary)] text-white active:brightness-90',
         'success': 'bg-green-600 text-white',
         'nav': "bg-transparent text-[var(--foreground)] hover:bg-[#77777740] !rounded-lg active:text-white",
-        'outline': "bg-transparent border-[var(--primary)] border-2 rounded-md p-2 "
+        'outline': "bg-transparent !border-[var(--primary)] border-2 rounded-md p-2 "
     }
 
     return (

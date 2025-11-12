@@ -1,38 +1,54 @@
 "use client"
 import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { DoorOpen, Flame, MousePointer2, MoveVertical, SplinePointer, Square } from 'lucide-react'
+import { Cpu, DoorOpen, Flame, MousePointer2, MoveVertical, SplinePointer, Square } from 'lucide-react'
 
 export const SideToolbar = () => {
 
     const [active, setActive] = useState(false);
 
+    const tools: Record<string, any>[] = [
+        {
+            key: "select",
+            name: "Select",
+            icon: <MousePointer2 size={20} />,
+            event: () => { }
+        },
+        {
+            key: "room",
+            name: "Room",
+            icon: <Square size={20} />,
+            event: () => { }
+        },
+        {
+            key: "path",
+            name: "Path",
+            icon: <SplinePointer size={20} />,
+            event: () => { }
+        },
+        {
+            key: "select",
+            name: "Select",
+            icon: <Cpu size={20} />,
+            event: () => { }
+        },
+        {
+            key: "select",
+            name: "Select",
+            icon: <MoveVertical size={20} />,
+            event: () => { }
+        },
+        {
+            key: "select",
+            name: "Select",
+            icon: <DoorOpen size={20} />,
+            event: () => { }
+        },
+    ]
+
     return (
-        <div className='space-y-3 py-5 px-2 border-r-2'>
-            {/* select button */}
-            <Button onClick={()=>setActive(true)}>
-                <MousePointer2 />
-            </Button>
-            {/* room */}
-            <Button onClick={()=>setActive(true)}>
-                <Square />
-            </Button>
-            {/* path */}
-            <Button onClick={()=>setActive(true)}>
-                <SplinePointer />
-            </Button>
-            {/* sensor */}
-            <Button onClick={()=>setActive(true)}>
-                <Flame />
-            </Button>
-            {/* stairs */}
-            <Button onClick={()=>setActive(true)}>
-                <MoveVertical />
-            </Button>
-            {/* Emergency exit */}
-            <Button onClick={()=>setActive(true)}>
-                <DoorOpen />
-            </Button>
+        <div className='space-y-3 p-5 border-r-3 border-(--card)'>
+           
         </div>
     )
 };

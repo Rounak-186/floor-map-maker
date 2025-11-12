@@ -31,44 +31,48 @@ export default function DesignMap() {
   return (
     <>
       {/* top bar */}
-      <div className='flex items-center justify-between w-full h-fit p-5 bg-[var(--background)] border-b-2 '>
+      <div className='flex items-center justify-between w-full h-fit p-5 bg-(--card/70) border-b-3 border-(--card)'>
         {/* left side elements */}
         <div className='flex items-center justify-center gap-8'>
           {/* back button */}
-          <div className='border-r-3 border-gray-300 pr-5'>
-            <ChevronFirst />
+          <div className=''>
+            <Button variant='outline' className='rounded-full p-1!'>
+              <ChevronFirst />
+            </Button>
           </div>
           {/* Map Name */}
           <div>
-            <h2 className="text-2xl">Example Map</h2>
-            <p className='text-lg text-gray-600'>Floor Map Editor</p>
+            <h2 className="text-2xl text-semibold">Example Map</h2>
+            <p className='text-md text-gray-600'>Floor Map Editor</p>
           </div>
         </div>
         {/* right side elements */}
         <Button variant='outline'>
-          <span><Save /></span>
+          <span className='text-(--primary)'><Save size={20} /></span>
           Save Changes
         </Button>
       </div>
       {/* main container */}
-      <div className='grid grid-cols-[70px_1fr_300px] h-screen'>
+      <div className='grid grid-cols-[70px_1fr_400px] h-screen'>
         <SideToolbar />
         <div className='w-full h-full'></div>
         {/* Floor list */}
-        <div className='border-l-2'>
-          <div className="border-b-2 flex items-center justify-between p-6">
-            <div className='flex items-center justify-center'>
+        <div className='border-l border-gray-600'>
+          <div className="border-b-2 border-(--primary) flex items-center justify-between p-6">
+            <div className='flex items-center justify-center gap-4'>
               <span><Layers /></span>
-              <h4>Floors</h4>
+              <h4 className='text-xl'>Floors</h4>
             </div>
-            <Button variant='outline'>
-              <span><Plus /></span>
+            <Button variant='outline' className='px-3! py-1! hover:scale-102'>
+              <span><Plus size={20} /></span>
               Add
             </Button>
           </div>
-          {mockFloorData.map((floor) => {
-            return <FloorCard floor={floor} />
-          })}
+          <div className='p-2 h-screen'>
+            {mockFloorData.map((floor) => {
+              return <FloorCard floor={floor} />
+            })}
+          </div>
         </div>
       </div>
     </>
@@ -77,18 +81,18 @@ export default function DesignMap() {
 
 const FloorCard = ({ floor }: { floor: Record<string, any> }) => {
   return (
-    <div className={clsx(" p-4 flex items-center justify-center bg-[var(--card)]","mb-2 border-l-3 border-[var(--primary)] ")}>
+    <div className={clsx(" p-4 flex items-center justify-between bg-(--card)", "mb-2 border-l-5 rounded-lg border-(--primary) ")}>
       {/* floor details */}
       <div className='space-y-2'>
-        <h3>{floor.name}</h3>
+        <h3 className='text-lg'>{floor.name}</h3>
         <div className="flex items-center justify-center ">
           <span>{floor.roomCount} Rooms</span>
           <Dot />
           <span>{floor.sensorCount} Sensors</span>
         </div>
       </div>
-      <Button>
-        <EllipsisVertical />
+      <Button variant='nav'>
+        <EllipsisVertical size={20} />
       </Button>
     </div>
   )
