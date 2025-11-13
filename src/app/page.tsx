@@ -23,7 +23,7 @@ export default function HomePage() {
       name: "Jolu Building C",
       date: "11/12/2025",
       floors: 1,
-    },{
+    }, {
       id: 4,
       name: "Jolu Building D",
       date: "11/12/2025",
@@ -57,8 +57,12 @@ export default function HomePage() {
               <h1 className='text-2xl font-bold'>Your Floor Maps</h1>
               <p className='text-gray-500'>Create new maps or edit existing ones</p>
             </div>
-            <button className='bg-gray-900 px-4 py-0 rounded-xl text-white font-bold flex justify-center items-center gap-3'>
-              <span className='font-bold'><Plus /> </span> <span>Create New Map</span>
+            <button 
+            
+            className='bg-gray-900 px-5 py-0 rounded-xl text-white font-bold flex justify-center items-center gap-2'>
+              <Plus fontSize={14} /> <span className='text-sm'>
+                Create New Map
+              </span>
             </button>
 
           </div>
