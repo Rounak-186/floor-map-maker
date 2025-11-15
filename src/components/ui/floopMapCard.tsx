@@ -29,17 +29,10 @@ export default function FloorMapCard({ map, }: FloorMapCardProps) {
       </div>
 
       <div className="flex justify-between items-center">
-<<<<<<< HEAD:src/components/floopMapCard.tsx
-        <div className="text-gray-600 text-sm">{map.floors} floor</div>
-       <button className="mt-3 text-(--primary) font-medium hover:underline">
-        Edit →
-       </button>
-=======
         <div className="text-gray-600 text-md pt-2">{map.floors} floor</div>
         <button className="mt-3 p-0! text-(--primary) font-medium hover:underline cursor-pointer">
           Edit →
         </button>
->>>>>>> 56d97a9b03a4cd2ae43804e0097ca4dd8c1e67ce:src/components/ui/floopMapCard.tsx
       </div>
     </div>
   );

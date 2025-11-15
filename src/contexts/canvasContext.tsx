@@ -24,7 +24,7 @@ export const CanvasDataProvider = ({ children }: { children: ReactNode }) => {
         if (componentIndex === -1) return;
 
         let component = componentList[componentIndex];
-        component.data = data;
+        component.data = {...component.data, data};
 
         componentList[componentIndex] = component;
         floorlist[floorIndex].componentList = componentList;

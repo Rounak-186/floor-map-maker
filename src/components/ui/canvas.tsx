@@ -12,7 +12,7 @@ type ComponentType = {
   }
 }
 
-export default function Canvas({children}:{children:ReactNode}) {
+export default function Canvas() {
 
   const stageRef = useRef<any | null>(null);
  
@@ -25,7 +25,7 @@ export default function Canvas({children}:{children:ReactNode}) {
     <Stage
       ref={stageRef}
     >
-      {children}
+      
     </Stage>
   )
 }
