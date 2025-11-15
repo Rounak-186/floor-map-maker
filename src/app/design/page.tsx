@@ -1,12 +1,24 @@
-import FloorList from '@/components/floorList';
-import SideToolbar from '@/components/sideToolbar'
+"use client"
+import Canvas from '@/components/ui/canvas';
+import FloorList from '@/components/ui/floorList';
+import SideToolbar from '@/components/ui/sideToolbar'
 import { Button } from '@/components/ui/button'
 import clsx from 'clsx';
 import { ChevronFirst, Dot, EllipsisVertical, Layers, Plus, Save } from 'lucide-react'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import canvasDataContext, { useCanvasData } from '@/contexts/canvasContext';
 
 export default function DesignMap() {
 
+  const [selectedTool, setSelectedTool] = useState("");
+
+  const {canvasData, setCanvasData} = useCanvasData();
+
+  useEffect(()=>{
+    setCanvasData([{hello:"world"}]);
+  }, [])
+
+  console.log(canvasData);
   
 
   return (
@@ -18,7 +30,7 @@ export default function DesignMap() {
           {/* back button */}
           <div className=''>
             <Button variant='outline' className='rounded-full p-1!'>
-              <ChevronFirst size={20}/>
+              <ChevronFirst size={20} />
             </Button>
           </div>
           {/* Map Name */}
@@ -34,13 +46,18 @@ export default function DesignMap() {
         </Button>
       </div>
       {/* main container */}
-      <div className='grid grid-cols-[80px_1fr_300px] h-screen'>
-        <SideToolbar />
-        <div className='w-full h-full'></div>
+      <div className='grid grid-cols-[80px_1fr_300px] h-[calc(100vh-100px)]'>
+        <SideToolbar onToolSelect={(key) => setSelectedTool(key)} />
+        <div className='w-full h-full flex items-center justify-center'>
+          <Canvas>
+            <div></div>
+          </Canvas>
+        </div>
         {/* Floor list */}
-        <FloorList/>
+        <FloorList />
       </div>
     </>
   )
 };
 
+// floor_id ,componentId, data

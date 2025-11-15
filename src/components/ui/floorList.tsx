@@ -1,7 +1,7 @@
 "use client"
 import { Dot, EllipsisVertical, Layers, Plus } from 'lucide-react'
 import React, { useState } from 'react'
-import { Button } from './ui/button'
+import { Button } from './button'
 import clsx from 'clsx'
 
 export default function FloorList() {
@@ -34,10 +34,73 @@ export default function FloorList() {
             roomCount: 7,
             sensorCount: 17,
         },
+        {
+            id: 1,
+            key: "zero",
+            name: "Ground Floor",
+            roomCount: 12,
+            sensorCount: 28,
+        },
+        {
+            id: 2,
+            key: "first",
+            name: "First Floor",
+            roomCount: 9,
+            sensorCount: 21,
+        },
+        {
+            id: 3,
+            key: "second",
+            name: "Second Floor",
+            roomCount: 7,
+            sensorCount: 17,
+        },
+        {
+            id: 1,
+            key: "zero",
+            name: "Ground Floor",
+            roomCount: 12,
+            sensorCount: 28,
+        },
+        {
+            id: 2,
+            key: "first",
+            name: "First Floor",
+            roomCount: 9,
+            sensorCount: 21,
+        },
+        {
+            id: 3,
+            key: "second",
+            name: "Second Floor",
+            roomCount: 7,
+            sensorCount: 17,
+        },
+        {
+            id: 1,
+            key: "zero",
+            name: "Ground Floor",
+            roomCount: 12,
+            sensorCount: 28,
+        },
+        {
+            id: 2,
+            key: "first",
+            name: "First Floor",
+            roomCount: 9,
+            sensorCount: 21,
+        },
+        {
+            id: 3,
+            key: "second",
+            name: "Second Floor",
+            roomCount: 7,
+            sensorCount: 17,
+        },
     ];
 
     return (
-        <div className='border-l border-gray-600'>
+        <div className='border-l border-gray-600 grid grid-rows-[auto_1fr]  h-[calc(100vh-100px)]'>
             <div className="border-b-2 border-(--primary) flex items-center justify-between p-6">
                 <div className='flex items-center justify-center gap-4'>
                     <span><Layers size={20} /></span>
@@ -48,7 +111,7 @@ export default function FloorList() {
                     Add
                 </Button>
             </div>
-            <div className='p-2 h-screen'>
+            <div className='p-2 h-full overflow-y-auto'>
                 {mockFloorData.map((floor, index) => {
                     return <FloorCard
                         floor={floor} key={floor.key} isActive={active === floor.key} onClick={() => handleClick(floor.key)} />

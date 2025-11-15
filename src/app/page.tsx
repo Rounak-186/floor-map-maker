@@ -1,6 +1,6 @@
 
 import React from 'react'
-import FloorMapCard from '@/components/floopMapCard'
+import FloorMapCard from '@/components/ui/floopMapCard'
 import { Building2, Plus } from 'lucide-react';
 
 export default function HomePage() {
