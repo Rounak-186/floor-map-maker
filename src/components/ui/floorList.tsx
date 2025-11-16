@@ -34,69 +34,7 @@ export default function FloorList() {
             roomCount: 7,
             sensorCount: 17,
         },
-        {
-            id: 1,
-            key: "zero",
-            name: "Ground Floor",
-            roomCount: 12,
-            sensorCount: 28,
-        },
-        {
-            id: 2,
-            key: "first",
-            name: "First Floor",
-            roomCount: 9,
-            sensorCount: 21,
-        },
-        {
-            id: 3,
-            key: "second",
-            name: "Second Floor",
-            roomCount: 7,
-            sensorCount: 17,
-        },
-        {
-            id: 1,
-            key: "zero",
-            name: "Ground Floor",
-            roomCount: 12,
-            sensorCount: 28,
-        },
-        {
-            id: 2,
-            key: "first",
-            name: "First Floor",
-            roomCount: 9,
-            sensorCount: 21,
-        },
-        {
-            id: 3,
-            key: "second",
-            name: "Second Floor",
-            roomCount: 7,
-            sensorCount: 17,
-        },
-        {
-            id: 1,
-            key: "zero",
-            name: "Ground Floor",
-            roomCount: 12,
-            sensorCount: 28,
-        },
-        {
-            id: 2,
-            key: "first",
-            name: "First Floor",
-            roomCount: 9,
-            sensorCount: 21,
-        },
-        {
-            id: 3,
-            key: "second",
-            name: "Second Floor",
-            roomCount: 7,
-            sensorCount: 17,
-        },
+     
     ];
 
     return (

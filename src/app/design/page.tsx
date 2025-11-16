@@ -12,14 +12,14 @@ export default function DesignMap() {
 
   const [selectedTool, setSelectedTool] = useState("");
 
-  const {canvasData, setCanvasData} = useCanvasData();
+  const { canvasData, setCanvasData } = useCanvasData();
 
-  useEffect(()=>{
-    setCanvasData([{hello:"world"}]);
+  useEffect(() => {
+    setCanvasData([{ hello: "world" }]);
   }, [])
 
   console.log(canvasData);
-  
+
 
   return (
     <>
@@ -49,9 +49,7 @@ export default function DesignMap() {
       <div className='grid grid-cols-[80px_1fr_300px] h-[calc(100vh-100px)]'>
         <SideToolbar onToolSelect={(key) => setSelectedTool(key)} />
         <div className='w-full h-full flex items-center justify-center'>
-          <Canvas>
-            <div></div>
-          </Canvas>
+          <Canvas />
         </div>
         {/* Floor list */}
         <FloorList />
