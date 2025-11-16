@@ -1,4 +1,6 @@
+"use client"
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type MapCeatePopupProps = {
@@ -9,7 +11,7 @@ type MapCeatePopupProps = {
 
 export default function MapCreatePopup({onClose}:MapCeatePopupProps) {
 
-
+    const router = useRouter();
 
     return (
         <>
@@ -32,7 +34,7 @@ export default function MapCreatePopup({onClose}:MapCeatePopupProps) {
                             Cancel
                         </button>
 
-                        <button className="bg-black text-white px-5 py-1 rounded-lg hover:bg-gray-800 active:scale-95 cursor-pointer" >
+                        <button className="bg-black text-white px-5 py-1 rounded-lg hover:bg-gray-800 active:scale-95 cursor-pointer" onClick={()=>router.push("/design")}>
                             Create Map
                         </button>
                     </div>
