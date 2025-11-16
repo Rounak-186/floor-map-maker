@@ -1,15 +1,12 @@
 import React from 'react'
 import { Group, Rect, Text } from 'react-konva'
 
-export const RoomTool = (data: any, label: string) => {
+export const RoomTool = (data: any, label: string, id: string) => {
+
   return (
-    <Group id="myCustomComponent">
+    <Group id={id}>
       <Rect
-        x={data.x}
-        y={data.y}
-        height={data.height}
-        width={data.width}
-        id={data.id}
+        {...data}
       />
       <Text
         x={data.x}

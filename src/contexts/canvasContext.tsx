@@ -42,6 +42,7 @@ export const CanvasDataProvider = ({ children }: { children: ReactNode }) => {
         floor = { ...floor, data };
 
         floorlist[floorIndex] = floor;
+        setCanvasData(floorlist)
     };
 
 

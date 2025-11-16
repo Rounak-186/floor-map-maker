@@ -7,7 +7,7 @@ import { useCanvasData } from '@/contexts/canvasContext';
 
 export const SideToolbar = ({ onToolSelect }: { onToolSelect: (key: string) => void }) => {
 
-    const [activeTool, setActiveTool] = useState<string>("select");
+    const { activeTool, setActiveTool } = useCanvasData();
 
     const handleClick = (key: string) => {
         setActiveTool(key);
