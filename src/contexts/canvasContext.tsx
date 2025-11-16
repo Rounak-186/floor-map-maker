@@ -1,5 +1,6 @@
 "use client"
 
+import { randomFillSync } from 'crypto';
 import React, { createContext, ReactNode, useContext, useState } from 'react'
 
 type CanvasDataContextType = {
@@ -30,9 +31,20 @@ export const CanvasDataProvider = ({ children }: { children: ReactNode }) => {
         floorlist[floorIndex].componentList = componentList;
 
         setCanvasData(floorlist);
+    }
 
+    const updateFloor = (floor_id: string, data: any)=>{
+        let floorlist = canvasData;
+        const floorIndex = floorlist.findIndex((f: any) => f.floor_id === floor_id);
+        if (floorIndex === -1) return;
+
+        let floor = floorlist[floorIndex];
+        floor = {...floor, data};
+
+        floorlist[floorIndex] = floor;
 
     }
+        
     return (
         <canvasDataContext.Provider value={{ canvasData, setCanvasData, updateComponent }}>
             {children}
@@ -48,8 +60,6 @@ export const useCanvasData = () => {
 
 export default canvasDataContext;
 
-
-// updateFloor
 // createFloor
 // removeFloor
 // createcomponent
