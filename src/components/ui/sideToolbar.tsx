@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { Button } from './button'
 import { Cpu, DoorOpen, Flame, MousePointer2, MoveVertical, SplinePointer, Square } from 'lucide-react'
 import clsx from 'clsx';
+import { useCanvasData } from '@/contexts/canvasContext';
 
 export const SideToolbar = ({ onToolSelect }: { onToolSelect: (key: string) => void }) => {
 
-    const [active, setActive] = useState<string>("select");
+    const [activeTool, setActiveTool] = useState<string>("select");
 
     const handleClick = (key: string) => {
-        setActive(key);
+        setActiveTool(key);
         onToolSelect(key);
     }
 
@@ -49,7 +50,7 @@ export const SideToolbar = ({ onToolSelect }: { onToolSelect: (key: string) => v
     return (
         <div className='flex flex-col items-center gap-2 py-5 border-r-3 border-(--card)'>
             {tools.map((tool) => {
-                const isActive = tool.key === active
+                const isActive = tool.key === activeTool
                 return (
                     <Button key={tool.key} className={clsx("flex flex-col items-center justify-center rounded-md w-12 h-12 p-1! gap-1!")} variant={isActive ? "primary" : "nav"} onClick={() => handleClick(tool.key)}>
                         <div>{tool.icon}</div>
