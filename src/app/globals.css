@@ -3,8 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #1d1d1d;
-  --primary:#7c46ef;
-  --card:#f3edff;
+  --primary: #7c46ef;
+  --card: #f3edff;
+  
 }
 
 @theme inline {

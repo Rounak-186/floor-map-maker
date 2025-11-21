@@ -7,6 +7,12 @@ import clsx from 'clsx';
 import { ChevronFirst, Dot, EllipsisVertical, Layers, Plus, Save } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 import canvasDataContext, { useCanvasData } from '@/contexts/canvasContext';
+import { RoomTool } from '@/tools/room.tool';
+import { Layer } from 'react-konva';
+import { PathTool } from '@/tools/pathTool';
+import { StairTool } from '@/tools/stairTool';
+import { SensorTool } from '@/tools/sensorTool';
+import { useRouter } from 'next/navigation';
 
 export default function DesignMap() {
 
@@ -20,6 +26,8 @@ export default function DesignMap() {
 
   console.log(canvasData);
 
+  const router = useRouter();
+
 
   return (
     <>
@@ -29,7 +37,7 @@ export default function DesignMap() {
         <div className='flex items-center justify-center gap-8'>
           {/* back button */}
           <div className=''>
-            <Button variant='outline' className='rounded-full p-1!'>
+            <Button variant='outline' className='rounded-full p-1!' onClick={()=>router.push("/")}>
               <ChevronFirst size={20} />
             </Button>
           </div>
@@ -48,8 +56,19 @@ export default function DesignMap() {
       {/* main container */}
       <div className='grid grid-cols-[80px_1fr_300px] h-[calc(100vh-100px)]'>
         <SideToolbar onToolSelect={(key) => setSelectedTool(key)} />
-        <div className='w-full h-full flex items-center justify-center'>
-          <Canvas />
+        <div className='flex justify-center items-center' style={{ transform: "none !important" }} >
+          <Canvas>
+            <Layer>
+              <RoomTool id="abc" data={{ x: 20, y: 50, height: 30, width: 80, label: "Room1" }} />
+              <RoomTool id="abc" data={{ x: 180, y: 60, height: 40, width: 60, label: "Room1" }} />
+              <StairTool data={{ x: 100, y: 200, height: 50, width: 80, label: "Satirs1" }} id="def" />
+              <SensorTool data={{ x: 100, y: 300, label: "Sensor1" }} id='xyz' />
+              <PathTool path={[{ v1: { x: 90, y: 200 }, v2: { x: 90, y: 250 } }, { v1: { x: 140, y: 200 }, v2: { x: 200, y: 300 } }]} id={"pqrs"} />
+
+
+            </Layer>
+
+          </Canvas>
         </div>
         {/* Floor list */}
         <FloorList />
