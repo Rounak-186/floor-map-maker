@@ -3,10 +3,9 @@ import Canvas from '@/components/ui/canvas';
 import FloorList from '@/components/ui/floorList';
 import SideToolbar from '@/components/ui/sideToolbar'
 import { Button } from '@/components/ui/button'
-import clsx from 'clsx';
-import { ChevronFirst, Dot, EllipsisVertical, Layers, Plus, Save } from 'lucide-react'
-import React, { useContext, useEffect, useState } from 'react'
-import canvasDataContext, { useCanvasData } from '@/contexts/canvasContext';
+import { ChevronFirst, Save } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { useCanvasData } from '@/contexts/canvasContext';
 import { RoomTool } from '@/tools/room.tool';
 import { Layer } from 'react-konva';
 import { PathTool } from '@/tools/pathTool';
@@ -16,13 +15,10 @@ import { useRouter } from 'next/navigation';
 
 export default function DesignMap() {
 
-  const [selectedTool, setSelectedTool] = useState("");
-
   const { canvasData, setCanvasData } = useCanvasData();
-
-  useEffect(() => {
-    setCanvasData([{ hello: "world" }]);
-  }, [])
+  const [floorId, setFloorId] = useState<string>((
+    canvasData[0]?.floor_id || ""
+  ));
 
   console.log(canvasData);
 
@@ -37,7 +33,7 @@ export default function DesignMap() {
         <div className='flex items-center justify-center gap-8'>
           {/* back button */}
           <div className=''>
-            <Button variant='outline' className='rounded-full p-1!' onClick={()=>router.push("/")}>
+            <Button variant='outline' className='rounded-full p-1!' onClick={() => router.push("/")}>
               <ChevronFirst size={20} />
             </Button>
           </div>
@@ -55,9 +51,9 @@ export default function DesignMap() {
       </div>
       {/* main container */}
       <div className='grid grid-cols-[80px_1fr_300px] h-[calc(100vh-100px)]'>
-        <SideToolbar onToolSelect={(key) => setSelectedTool(key)} />
+        <SideToolbar />
         <div className='flex justify-center items-center' style={{ transform: "none !important" }} >
-          <Canvas>
+          <Canvas floor_id={floorId}>
             <Layer>
               <RoomTool id="abc" data={{ x: 20, y: 50, height: 30, width: 80, label: "Room1" }} />
               <RoomTool id="abc" data={{ x: 180, y: 60, height: 40, width: 60, label: "Room1" }} />
@@ -71,7 +67,7 @@ export default function DesignMap() {
           </Canvas>
         </div>
         {/* Floor list */}
-        <FloorList />
+        <FloorList sendFloorId={setFloorId} />
       </div>
     </>
   )

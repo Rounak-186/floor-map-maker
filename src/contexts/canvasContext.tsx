@@ -58,7 +58,7 @@ export const CanvasDataProvider = ({ children }: { children: ReactNode }) => {
             comp_id: comp_id,
             data: data
         };
-        componentlist.append(newComponent);
+        componentlist.push(newComponent);
         floor.componentList = componentlist;
         floorlist[floorIndex] = floor;
         setCanvasData(floorlist);

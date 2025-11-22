@@ -1,3 +1,4 @@
+"use client"
 import React, { ReactNode, useRef, useState } from 'react'
 import { Layer, Stage } from 'react-konva'
 import DottedGridCanvas from './dottedGrid';
@@ -8,25 +9,31 @@ import { RoomTool } from '@/tools/room.tool';
 type ComponentType = {
   type: string,
   _id: string,
-  path?: [],
+  path?: any[],
   data: {
-    x: Number,
-    y: Number,
-    height: Number,
-    width: Number,
+    x: number,
+    y: number,
+    height: number,
+    width: number,
   }
 }
 
-export default function Canvas({ children }: { children: ReactNode }) {
+export default function Canvas({ children, floor_id = IdGenerator() }: { children: ReactNode, floor_id?: string }) {
 
-  const stageRef = useRef<any | null>(null);
-  const { activeTool, setActiveTool } = useCanvasData();
-
-
-
-  const [componentList, setComponentList] = useState<ComponentType[]>([]);
-  const [newComponent, setNewComponent] = useState<ComponentType | null>();
+  const { activeTool, setActiveTool, canvasData, setCanvasData, createComponent } = useCanvasData();
+  const [newComponent, setNewComponent] = useState<ComponentType | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const stageRef = useRef<any | null>(null);
+
+  let floorlist = canvasData;
+  const floorIndex = floorlist.findIndex((f: any) => f.floor_id === floor_id);
+  if (floorIndex === -1) return;
+
+  let floor = floorlist[floorIndex];
+  console.log("Floor : ", floor)
+  const componentList = floor.componentList
+  console.log("componentList : ", componentList)
+
 
   const handleMouseDown = () => {
     const stage = stageRef.current;
@@ -75,7 +82,7 @@ export default function Canvas({ children }: { children: ReactNode }) {
 
   const handleMouseUp = () => {
     if (newComponent) {
-      setComponentList([...componentList, newComponent])
+      createComponent(newComponent.type, floor_id, newComponent._id, newComponent.data)
     }
     setNewComponent(null);
     setIsDrawing(false);
@@ -92,21 +99,30 @@ export default function Canvas({ children }: { children: ReactNode }) {
         background: "#f6c3ff19"
       }}
       scale={{ x: 1, y: 1 }}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      onMouseDown={activeTool != "select" ? handleMouseDown : () => { }}
+      onMouseMove={activeTool != "select" ? handleMouseMove : () => { }}
+      onMouseUp={activeTool != "select" ? handleMouseUp : () => { }}
     >
       <DottedGridCanvas />
-      {children}
-      <Layer>
-        {componentList.map((component, index) => {
-          return (
-            <RoomTool id={component?._id} data={component?.data} key={index} />
-          )
-        })}
-        {newComponent && <RoomTool id={newComponent?._id} data={newComponent?.data} />}
-      </Layer>
-    </Stage>
+      {floor_id &&
+        <>
+          {children}
+          <Layer>
+            {componentList.length > 0 && componentList.map((component: any, index: number) => {
+              return (
+                <>
+                  {component.type === "room" && <RoomTool id={component?._id} data={component?.data} key={index} />}
+                  {component.type === "stairs" && <RoomTool id={component?._id} data={component?.data} key={index} />}
+                  {component.type === "path" && <RoomTool id={component?._id} data={component?.data} key={index} />}
+                  {component.type === "sensor" && <RoomTool id={component?._id} data={component?.data} key={index} />}
+                </>
+              )
+            })}
+            {newComponent && <RoomTool id={newComponent?._id} data={newComponent?.data} />}
+          </Layer>
+        </>
+      }
+    </Stage >
   )
 }
 

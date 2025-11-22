@@ -5,14 +5,13 @@ import { Cpu, DoorOpen, Flame, MousePointer2, MoveVertical, SplinePointer, Squar
 import clsx from 'clsx';
 import { useCanvasData } from '@/contexts/canvasContext';
 
-export const SideToolbar = ({ onToolSelect }: { onToolSelect: (key: string) => void }) => {
+export const SideToolbar = () => {
 
     const { activeTool, setActiveTool } = useCanvasData();
 
     const handleClick = (key: string) => {
         setActiveTool(key);
-        onToolSelect(key);
-    }
+    };
 
     const tools: Record<string, any>[] = [
         {
