@@ -28,33 +28,32 @@ export const StairTool = ({ data, id }: { data: any, id: string }) => {
                 fill="#b4ffec"
                 cornerRadius={5}
             />
-            {isHovered && (
-                <>
-                    <Text
-                        text={data?.label}
-                        fontSize={12}
-                        fontFamily="Calibri"
-                        fill="#0A1A2F"
-                        width={data.width}
-                        y={20}
-                        align="center"
-                    />
-                    <Arrow
-                        points={[15, data.height - 15, 15, 15]} // relative to the group's (0,0)
-                        pointerLength={7}
-                        pointerWidth={4}
-                        fill="black"
-                        stroke="black"
-                        strokeWidth={1}
-                    /><Arrow
-                        points={[15 + data.width - 30, 15, 15 + data.width - 30, data.height - 15]}   // relative to the group's (0,0)
-                        pointerLength={7}
-                        pointerWidth={4}
-                        fill="black"
-                        stroke="black"
-                        strokeWidth={1}
-                    />
-                </>)}
+
+            <Text
+                text={data?.label}
+                fontSize={12}
+                fontFamily="Calibri"
+                fill="#0A1A2F"
+                width={data.width}
+                y={(data.height/2)}
+                align="center"
+            />
+            <Arrow
+                points={[15, data.height - 15, 15, 15]} // relative to the group's (0,0)
+                pointerLength={7}
+                pointerWidth={4}
+                fill="black"
+                stroke="black"
+                strokeWidth={1}
+            /><Arrow
+                points={[15 + data.width - 30, 15, 15 + data.width - 30, data.height - 15]}   // relative to the group's (0,0)
+                pointerLength={7}
+                pointerWidth={4}
+                fill="black"
+                stroke="black"
+                strokeWidth={1}
+            />
+
         </Group>
     )
 }

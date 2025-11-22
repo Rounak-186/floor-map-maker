@@ -18,7 +18,7 @@ export const PathTool = ({ path, id }: { path: Record<string, Record<string, num
   console.log(vertices)
 
   return (
-    <Group>
+    <Group >
       <Line
         points={points}
         stroke="green"

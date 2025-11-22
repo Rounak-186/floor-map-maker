@@ -26,12 +26,11 @@ export const RoomTool = ({ data, id }: { data: any, id: string }) => {
         }}
       />
       <Text
-        text={isHovered ? data.label : ""}
+        text={data.label}
         fontSize={14}
         fontFamily="Calibri"
         fill="#0A1A2F"
         width={data.width}
-        y={-15}
         align="center"
       />
     </Group>

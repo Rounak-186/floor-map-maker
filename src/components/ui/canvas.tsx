@@ -1,10 +1,14 @@
 import React, { ReactNode, useRef, useState } from 'react'
-import { Stage } from 'react-konva'
+import { Layer, Stage } from 'react-konva'
 import DottedGridCanvas from './dottedGrid';
+import { useCanvasData } from '@/contexts/canvasContext';
+import { IdGenerator } from '@/utils/idGenerator';
+import { RoomTool } from '@/tools/room.tool';
 
 type ComponentType = {
   type: string,
   _id: string,
+  path?: [],
   data: {
     x: Number,
     y: Number,
@@ -16,11 +20,66 @@ type ComponentType = {
 export default function Canvas({ children }: { children: ReactNode }) {
 
   const stageRef = useRef<any | null>(null);
+  const { activeTool, setActiveTool } = useCanvasData();
 
-  const [componentList, setComponentList] = useState<ComponentType[]>();
-  const [newComponent, setNewComponent] = useState<ComponentType>();
-  const [selectedTool, setSelectedTool] = useState<string>("select")
-  const [isDrawing, setIsDrawing] = useState("false");
+
+
+  const [componentList, setComponentList] = useState<ComponentType[]>([]);
+  const [newComponent, setNewComponent] = useState<ComponentType | null>();
+  const [isDrawing, setIsDrawing] = useState(false);
+
+  const handleMouseDown = () => {
+    const stage = stageRef.current;
+    if (stage) {
+      const pointerPosition = stage.getPointerPosition();
+      if (pointerPosition) {
+        const { x, y } = pointerPosition;
+        const data = {
+          x: x,
+          y: y,
+          height: 0,
+          width: 0,
+        };
+        const comp_id = IdGenerator();
+        setNewComponent({ data: data, type: "room", _id: comp_id });
+        setIsDrawing(true);
+      }
+    }
+  };
+
+  const handleMouseMove = () => {
+    if (!newComponent || !isDrawing) return;
+    const stage = stageRef.current;
+    if (stage) {
+      const pointerPosition = stage.getPointerPosition();
+      if (pointerPosition) {
+        const { x, y } = pointerPosition;
+        const data = {
+          x: x,
+          y: y,
+          height: 0,
+          width: 0,
+        };
+        const comp_id = IdGenerator();
+        setNewComponent({
+          ...newComponent,
+          data: {
+            ...newComponent.data,
+            width: x - newComponent.data.x,
+            height: y - newComponent.data.y
+          }
+        });
+      }
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (newComponent) {
+      setComponentList([...componentList, newComponent])
+    }
+    setNewComponent(null);
+    setIsDrawing(false);
+  }
 
   return (
     <Stage
@@ -32,10 +91,21 @@ export default function Canvas({ children }: { children: ReactNode }) {
         borderRadius: "10px",
         background: "#f6c3ff19"
       }}
-      scale={{x:1,y:1}}
+      scale={{ x: 1, y: 1 }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
       <DottedGridCanvas />
       {children}
+      <Layer>
+        {componentList.map((component, index) => {
+          return (
+            <RoomTool id={component?._id} data={component?.data} key={index} />
+          )
+        })}
+        {newComponent && <RoomTool id={newComponent?._id} data={newComponent?.data} />}
+      </Layer>
     </Stage>
   )
 }
