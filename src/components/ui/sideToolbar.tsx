@@ -4,12 +4,13 @@ import { Button } from './button'
 import { Cpu, DoorOpen, Flame, MousePointer2, MoveVertical, SplinePointer, Square } from 'lucide-react'
 import clsx from 'clsx';
 import { useCanvasData } from '@/contexts/canvasContext';
+import { ToolType } from '../TipsBox';
 
 export const SideToolbar = () => {
 
     const { activeTool, setActiveTool } = useCanvasData();
 
-    const handleClick = (key: string) => {
+    const handleClick = (key: ToolType) => {
         setActiveTool(key);
     };
 
@@ -51,7 +52,7 @@ export const SideToolbar = () => {
             {tools.map((tool) => {
                 const isActive = tool.key === activeTool
                 return (
-                    <Button key={tool.key} className={clsx("flex flex-col items-center justify-center rounded-md w-12 h-12 p-1! gap-1!")} variant={isActive ? "primary" : "nav"} onClick={() => handleClick(tool.key)}>
+                    <Button key={tool.key} className={clsx("flex  flex-col items-center justify-center rounded-md w-12 h-12 p-1! gap-1!")} variant={isActive ? "primary" : "nav"} onClick={() => handleClick(tool.key)}>
                         <div>{tool.icon}</div>
                         <span className="text-[10px]">{tool.name}</span>
                     </Button>

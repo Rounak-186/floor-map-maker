@@ -12,6 +12,10 @@ import { PathTool } from '@/tools/pathTool';
 import { StairTool } from '@/tools/stairTool';
 import { SensorTool } from '@/tools/sensorTool';
 import { useRouter } from 'next/navigation';
+import CreateLable from '@/components/createLable';
+import TipsBox from '@/components/TipsBox';
+import type { ToolType } from "@/components/TipsBox";
+
 
 export default function DesignMap() {
 
@@ -65,6 +69,15 @@ export default function DesignMap() {
             </Layer>
 
           </Canvas>
+ <TipsBox
+  selectedTool={selectedTool}
+  onClose={() => setSelectedTool("")}
+/>
+
+
+            <div className="absolute bottom-4 right-4 z-50">
+    <CreateLable />
+  </div>
         </div>
         {/* Floor list */}
         <FloorList sendFloorId={setFloorId} />
