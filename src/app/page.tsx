@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import FloorMapCard from '@/components/floopMapCard'
 import { Building2, Plus } from 'lucide-react';
 import MapCreatePopup from '@/components/mapCreatePopup';
+import CreateLable from '@/components/createLable';
 
 
 export default function HomePage() {
@@ -78,6 +79,7 @@ export default function HomePage() {
             ))}
 
           </div>
+          
         </div>
 
       </div>
