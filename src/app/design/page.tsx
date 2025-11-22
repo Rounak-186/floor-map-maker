@@ -13,10 +13,16 @@ import { PathTool } from '@/tools/pathTool';
 import { StairTool } from '@/tools/stairTool';
 import { SensorTool } from '@/tools/sensorTool';
 import { useRouter } from 'next/navigation';
+import CreateLable from '@/components/createLable';
+import TipsBox from '@/components/TipsBox';
+import type { ToolType } from "@/components/TipsBox";
+
 
 export default function DesignMap() {
 
-  const [selectedTool, setSelectedTool] = useState("");
+
+const [selectedTool, setSelectedTool] = useState<ToolType>("");
+
 
   const { canvasData, setCanvasData } = useCanvasData();
 
@@ -54,9 +60,9 @@ export default function DesignMap() {
         </Button>
       </div>
       {/* main container */}
-      <div className='grid grid-cols-[80px_1fr_300px] h-[calc(100vh-100px)]'>
-        <SideToolbar onToolSelect={(key) => setSelectedTool(key)} />
-        <div className='flex justify-center items-center' style={{ transform: "none !important" }} >
+      <div className='grid grid-cols-[80px_1fr_300px] h-[calc(100vh-100px)] '>
+        <SideToolbar onToolSelect={(key:ToolType) => setSelectedTool(key)} />
+        <div className='flex justify-center items-center relative' style={{ transform: "none !important" }} >
           <Canvas>
             <Layer>
               <RoomTool id="abc" data={{ x: 20, y: 50, height: 30, width: 80, label: "Room1" }} />
@@ -69,6 +75,15 @@ export default function DesignMap() {
             </Layer>
 
           </Canvas>
+ <TipsBox
+  selectedTool={selectedTool}
+  onClose={() => setSelectedTool("")}
+/>
+
+
+            <div className="absolute bottom-4 right-4 z-50">
+    <CreateLable />
+  </div>
         </div>
         {/* Floor list */}
         <FloorList />
