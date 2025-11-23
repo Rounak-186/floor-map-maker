@@ -58,7 +58,7 @@ export default function DesignMap() {
         <SideToolbar />
         <div className='flex justify-center items-center' style={{ transform: "none !important" }} >
           <Canvas floor_id={floorId}>
-            <Layer>
+            {/* <Layer>
               <RoomTool id="abc" data={{ x: 20, y: 50, height: 30, width: 80, label: "Room1" }} />
               <RoomTool id="abc" data={{ x: 180, y: 60, height: 40, width: 60, label: "Room1" }} />
               <StairTool data={{ x: 100, y: 200, height: 50, width: 80, label: "Satirs1" }} id="def" />
@@ -66,18 +66,15 @@ export default function DesignMap() {
               <PathTool path={[{ v1: { x: 90, y: 200 }, v2: { x: 90, y: 250 } }, { v1: { x: 140, y: 200 }, v2: { x: 200, y: 300 } }]} id={"pqrs"} />
 
 
-            </Layer>
+            </Layer> */}
 
           </Canvas>
- <TipsBox
-  selectedTool={selectedTool}
-  onClose={() => setSelectedTool("")}
-/>
+          <TipsBox/>
 
 
-            <div className="absolute bottom-4 right-4 z-50">
-    <CreateLable />
-  </div>
+          <div className="absolute bottom-4 right-4 z-50">
+            <CreateLable />
+          </div>
         </div>
         {/* Floor list */}
         <FloorList sendFloorId={setFloorId} />
