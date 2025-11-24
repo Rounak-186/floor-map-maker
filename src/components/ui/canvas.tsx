@@ -7,6 +7,8 @@ import { IdGenerator } from '@/utils/idGenerator';
 import { RoomTool } from '@/tools/room.tool';
 import { StairTool } from '@/tools/stairTool';
 import { PathTool } from '@/tools/pathTool';
+import Konva from 'konva';
+import { SensorTool } from '@/tools/sensorTool';
 
 type ComponentType = {
   type: string,
@@ -43,11 +45,13 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
 
   const renderComponent: Record<string, (id: string, data: any, path: any[]) => ReactNode> = {
     room: (id, data) => <RoomTool id={id} data={data} />,
-    stairs: (id, data) => <StairTool id={id} data={data} />,
-    path: (id, data, path) => <PathTool id={id} data={data} path={path} />
+    stair: (id, data) => <StairTool id={id} data={data} />,
+    path: (id, data, path) => <PathTool id={id} data={data} path={path} />,
+    sensor: (id, data) => <SensorTool id={id} data={data} />,
+
   }
 
-  const mouseDown: Record<string, (stage: any) => void> = {
+  const mouseDown: Record<string, (stage: any, e: Konva.KonvaEventObject<MouseEvent>) => void> = {
     room: (stage) => {
       if (stage) {
         const pointerPosition = stage.getPointerPosition();
@@ -65,7 +69,7 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
         }
       }
     },
-    stairs: (stage) => {
+    stair: (stage) => {
       if (stage) {
         const pointerPosition = stage.getPointerPosition();
         if (pointerPosition) {
@@ -77,13 +81,87 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
             width: 0,
           };
           const comp_id = IdGenerator();
-          setNewComponent({ data: data, type: "stairs", id: comp_id, path: [] });
+          setNewComponent({ data: data, type: "stair", id: comp_id, path: [] });
           setIsDrawing(true);
         }
       }
     },
 
-    path: (stage) => {
+    path: (stage, e) => {
+      if (stage) {
+        if (e.evt.button === 0) {
+          console.log("first left click occured");
+          const pointerPosition = stage.getPointerPosition();
+          if (pointerPosition) {
+            const { x, y } = pointerPosition;
+            const data = {
+              x: x,
+              y: y,
+              height: 0,
+              width: 0,
+            };
+            console.log("Pointer position got", x, y)
+            if (!liveSegment) {
+              console.log("liveSegment was null and will now be updated");
+              const newSeg = {
+                v1: { x, y },
+                v2: { x, y },
+              };
+              setLiveSegment(newSeg);
+              console.log("LiveSegment initialised: ", newSeg)
+              if (!newComponent) {
+                const comp_id = IdGenerator();
+                setNewComponent({ data: data, type: "path", id: comp_id, path: [newSeg] });
+                console.log("vertices sent from canvas ", newComponent)
+              }
+              setIsDrawing(true)
+              return;
+            }
+
+            if (!newComponent) {
+              const comp_id = IdGenerator();
+              setNewComponent({ data: data, type: "path", id: comp_id, path: [...segments, liveSegment] });
+              console.log("component created: ", newComponent)
+            }
+
+            // second click = finalize segment
+            setSegments(prev => [
+              ...prev,
+              { v1: liveSegment.v1, v2: { x, y } }
+            ]);
+
+            // start new segment from the last point
+            setLiveSegment({
+              v1: { x, y },
+              v2: { x, y }
+            });
+            if (newComponent) setNewComponent({ ...newComponent, path: [...segments, liveSegment] })
+
+          }
+        };
+
+        if (e.evt.button === 2 && liveSegment) {
+          // if (liveSegment) {
+          //   setSegments(prev => [...prev, liveSegment]);
+          // }
+
+          // save to canvasData
+          if (newComponent) {
+            createComponent("path", floor_id, newComponent.id, newComponent.data, [...segments, liveSegment]);
+            console.log("Path completed")
+          }
+
+          // reset
+          setIsDrawing(false)
+          setLiveSegment(null);
+          setSegments([]);
+          setNewComponent(null)
+          console.log(newComponent)
+        }
+      }
+    },
+
+    sensor: (stage) => {
       if (stage) {
         const pointerPosition = stage.getPointerPosition();
         if (pointerPosition) {
@@ -93,36 +171,13 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
             y: y,
             height: 0,
             width: 0,
-          };
-
-          if (!liveSegment) {
-            setLiveSegment({
-              v1: { x, y },
-              v2: { x, y }  // TEMP equals mouse until move
-            });
-            setIsDrawing(true)
-            return;
+            label:"sensor"
           }
-
-          if (!newComponent) {
-            const comp_id = IdGenerator();
-            setNewComponent({ data: data, type: "path", id: comp_id, path: [...segments, liveSegment] })
-          }
-
-          // second click = finalize segment
-          setSegments(prev => [
-            ...prev,
-            { v1: liveSegment.v1, v2: { x, y } }
-          ]);
-
-          // start new segment from the last point
-          setLiveSegment({
-            v1: { x, y },
-            v2: { x, y }
-          });
-          if (newComponent) setNewComponent({ ...newComponent, path: [...segments, liveSegment] })
-          
+          const comp_id = IdGenerator();
+          setNewComponent({ data: data, type: "sensor", id: comp_id, path: [] });
+          createComponent("sensor", floor_id, comp_id, data, []);
         }
+
       }
     }
   };
@@ -152,7 +207,7 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
         }
       }
     },
-    stairs: (stage) => {
+    stair: (stage) => {
       if (!newComponent || !isDrawing) return;
       if (stage) {
         const pointerPosition = stage.getPointerPosition();
@@ -208,7 +263,7 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
       setNewComponent(null);
       setIsDrawing(false);
     },
-    stairs: () => {
+    stair: () => {
       if (newComponent) {
         createComponent(newComponent.type, floor_id, newComponent.id, newComponent.data, [])
       }
@@ -216,27 +271,6 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
       setIsDrawing(false);
     }
   };
-
-  const doubleClick: Record<string, (stage: any) => void> = {
-    path: (stage) => {
-      // if (liveSegment) {
-      //   setSegments(prev => [...prev, liveSegment]);
-      // }
-
-      // save to canvasData
-      if (newComponent) {
-        createComponent("path", floor_id, newComponent.id, newComponent.data, [...segments, liveSegment]);
-        console.log("Path completed")
-      }
-
-      // reset
-      setIsDrawing(false)
-      setLiveSegment(null);
-      setSegments([]);
-    }
-
-  };
-
 
   return (
     <Stage
@@ -249,10 +283,12 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
         background: "#f6c3ff19"
       }}
       scale={{ x: 1, y: 1 }}
-      onMouseDown={() => { mouseDown[activeTool]?.(stage) }}
+      onMouseDown={(e: Konva.KonvaEventObject<MouseEvent>) => { mouseDown[activeTool]?.(stage, e) }}
       onMouseMove={() => { mouseMove[activeTool]?.(stage) }}
       onMouseUp={() => { mouseUp[activeTool]?.(stage) }}
-      onDblClick={() => { doubleClick[activeTool]?.(stage) }}
+      onContextMenu={(e) => {
+        e.evt.preventDefault();   // stop browser menu
+      }}
     >
       <DottedGridCanvas />
       {floor_id &&
@@ -263,9 +299,9 @@ export default function Canvas({ children, floor_id = IdGenerator() }: { childre
               return (
                 <React.Fragment key={index}>
                   {component.type === "room" && <RoomTool id={component?._id} data={component?.data} key={index} />}
-                  {component.type === "stairs" && <StairTool id={component?._id} data={component?.data} key={index} />}
+                  {component.type === "stair" && <StairTool id={component?._id} data={component?.data} key={index} />}
                   {component.type === "path" && <PathTool id={component?._id} data={component?.data} key={index} path={component?.path} />}
-                  {component.type === "sensor" && <RoomTool id={component?._id} data={component?.data} key={index} />}
+                  {component.type === "sensor" && <SensorTool id={component?._id} data={component?.data} key={index} />}
                 </React.Fragment>
               )
             })}

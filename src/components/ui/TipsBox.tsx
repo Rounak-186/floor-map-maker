@@ -1,7 +1,7 @@
 import { useCanvasData } from "@/contexts/canvasContext";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-export type ToolType = "select" | "room" | "path" | "sensor" | "stairs" | "";
+export type ToolType = "select" | "room" | "path" | "sensor" | "stair" | "";
 
 interface TipsBoxProps {
   onClose: () => void;
@@ -40,8 +40,8 @@ export default function TipsBox() {
     path: {
       name: "Path Tool",
       instructions: [
-        "Click to add points.",
-        "Double-click to finish the path.",
+        "Left-Click to add points.",
+        "Right-click to finish the path.",
       ]
     },
     sensor: {
@@ -51,10 +51,10 @@ export default function TipsBox() {
         "Move sensors using select tool.",
       ]
     },
-    stairs: {
-      name: "Stairs",
+    stair: {
+      name: "stair",
       instructions: [
-        "Click and drag to draw stairs.",
+        "Click and drag to draw stair.",
         "Release mouse to place it.",
       ]
     },

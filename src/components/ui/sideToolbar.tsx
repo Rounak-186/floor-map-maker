@@ -36,8 +36,8 @@ export const SideToolbar = () => {
             icon: <Cpu size={16} />,
         },
         {
-            key: "stairs",
-            name: "Stairs",
+            key: "stair",
+            name: "stair",
             icon: <MoveVertical size={16} />,
         },
         {

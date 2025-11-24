@@ -5,8 +5,6 @@ import { Circle, Group, Label, Rect, Tag, Text } from 'react-konva'
 
 export const SensorTool = ({ data, id }: { data: any, id: string }) => {
 
-    const [isHovered, setIsHovered] = useState<Boolean>(false)
-
     return (
         <Group
             id={id}
@@ -24,17 +22,14 @@ export const SensorTool = ({ data, id }: { data: any, id: string }) => {
                 radius={5}
                 stroke="red"
                 strokeWidth={5}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
             />
             <Text
-                text={isHovered ? data.label : ""}
+                text={data.label}
                 fontSize={14}
                 fontFamily="Calibri"
                 fill="#0A1A2F"
                 width={50}
                 y={-22}
-                x={-20}
                 align="center"
             />
         </Group>
