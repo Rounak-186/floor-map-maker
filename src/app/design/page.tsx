@@ -12,9 +12,9 @@ import { PathTool } from '@/tools/pathTool';
 import { StairTool } from '@/tools/stairTool';
 import { SensorTool } from '@/tools/sensorTool';
 import { useRouter } from 'next/navigation';
-import CreateLable from '@/components/createLable';
-import TipsBox from '@/components/TipsBox';
-import type { ToolType } from "@/components/TipsBox";
+import CreateLabel from '@/components/ui/createLabel';
+import TipsBox from '@/components/ui/TipsBox';
+import type { ToolType } from "@/components/ui/TipsBox";
 
 
 export default function DesignMap() {
@@ -23,9 +23,6 @@ export default function DesignMap() {
   const [floorId, setFloorId] = useState<string>((
     canvasData[0]?.floor_id || ""
   ));
-
-  console.log(canvasData);
-
   const router = useRouter();
 
 
@@ -58,22 +55,12 @@ export default function DesignMap() {
         <SideToolbar />
         <div className='flex justify-center items-center' style={{ transform: "none !important" }} >
           <Canvas floor_id={floorId}>
-            {/* <Layer>
-              <RoomTool id="abc" data={{ x: 20, y: 50, height: 30, width: 80, label: "Room1" }} />
-              <RoomTool id="abc" data={{ x: 180, y: 60, height: 40, width: 60, label: "Room1" }} />
-              <StairTool data={{ x: 100, y: 200, height: 50, width: 80, label: "Satirs1" }} id="def" />
-              <SensorTool data={{ x: 100, y: 300, label: "Sensor1" }} id='xyz' />
-              <PathTool path={[{ v1: { x: 90, y: 200 }, v2: { x: 90, y: 250 } }, { v1: { x: 140, y: 200 }, v2: { x: 200, y: 300 } }]} id={"pqrs"} />
-
-
-            </Layer> */}
-
           </Canvas>
-          <TipsBox/>
+          <TipsBox />
 
 
-          <div className="absolute bottom-4 right-4 z-50">
-            <CreateLable />
+          <div className="absolute bottom-4 right-2 z-50">
+            <CreateLabel />
           </div>
         </div>
         {/* Floor list */}

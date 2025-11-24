@@ -21,7 +21,7 @@ export default function FloorList({ sendFloorId }: { sendFloorId: (id: string) =
 
     const addNewFloor = () => {
         const floornumber = canvasData.length;
-        const floorName = `Floor${floornumber}`;
+        const floorName = `Floor ${floornumber}`;
         const floorId = IdGenerator();
         createFloor(floorId, floorName);
     }

@@ -15,7 +15,12 @@ export default function TipsBox() {
   }, [activeTool])
   if (!activeTool) return null;
 
-  const toolTips: Record<string, any> = {
+  interface ToolTipData {
+    name: string,
+    instructions: string[]
+  }
+
+  const toolTips: Record<string, ToolTipData> = {
     select: {
       name: "Select",
       instructions: [

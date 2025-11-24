@@ -9,7 +9,7 @@ type CanvasDataContextType = {
     setActiveTool: (tool: string) => void,
     createFloor: (floor_id: string, floor_name: string) => void,
     updateFloor: (floor_id: string, data: any) => void,
-    createComponent: (type: string, floor_id: string, comp_id: string, data: any) => void,
+    createComponent: (type: string, floor_id: string, comp_id: string, data: any, path: any[]) => void,
     updateComponent: (floor_id: string, component_id: string, data: any) => void,
 
 
@@ -48,7 +48,7 @@ export const CanvasDataProvider = ({ children }: { children: ReactNode }) => {
 
 
     // Create Component function
-    const createComponent = (type: string, floor_id: string, comp_id: string, data: any) => {
+    const createComponent = (type: string, floor_id: string, comp_id: string, data: any, path:any[]) => {
         let floorlist = canvasData;
         let floorIndex = floorlist.findIndex((f: any) => f.floor_id === floor_id);
         let floor = floorlist[floorIndex];
@@ -56,6 +56,7 @@ export const CanvasDataProvider = ({ children }: { children: ReactNode }) => {
         const newComponent = {
             type: type,
             comp_id: comp_id,
+            path: path || [],
             data: data
         };
         componentlist.push(newComponent);

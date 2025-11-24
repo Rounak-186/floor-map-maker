@@ -1,7 +1,7 @@
 import { X } from 'lucide-react'
 import React from 'react'
 
-export default function CreateLable() {
+export default function CreateLabel() {
     return (
         <>
             <div className="  rounded-2xl px-6 pt-6 pb-3 shadow-xl relative cursor-pointer bg-(--primary)/15 backdrop-blur-[5px] ">

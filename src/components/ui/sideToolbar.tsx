@@ -4,7 +4,7 @@ import { Button } from './button'
 import { Cpu, DoorOpen, Flame, MousePointer2, MoveVertical, SplinePointer, Square } from 'lucide-react'
 import clsx from 'clsx';
 import { useCanvasData } from '@/contexts/canvasContext';
-import { ToolType } from '../TipsBox';
+import { ToolType } from './TipsBox';
 
 export const SideToolbar = () => {
 

@@ -9,10 +9,10 @@ interface FloorMapCardProps {
     date: string;
     floors: number;
   };
-
+  
 }
 
-export default function FloorMapCard({ map, }: FloorMapCardProps) {
+export default function FloorMapCard({ map,  }: FloorMapCardProps) {
   return (
     <div className="bg-white border rounded-2xl p-5 hover:scale-105 cursor-pointer shadow-sm hover:shadow-lg transition">
       <div className="flex items-center gap-3 mb-3">
@@ -29,10 +29,10 @@ export default function FloorMapCard({ map, }: FloorMapCardProps) {
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="text-gray-600 text-md pt-2">{map.floors} floor</div>
-        <button className="mt-3 p-0! text-(--primary) font-medium hover:underline cursor-pointer">
-          Edit →
-        </button>
+        <div className="text-gray-600 text-sm">{map.floors} floor</div>
+       <button className="mt-3 text-(--primary) font-medium hover:underline">
+        Edit →
+       </button>
       </div>
     </div>
   );

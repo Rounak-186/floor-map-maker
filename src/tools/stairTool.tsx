@@ -38,7 +38,7 @@ export const StairTool = ({ data, id }: { data: any, id: string }) => {
                 y={(data.height/2)}
                 align="center"
             />
-            <Arrow
+            {/* <Arrow
                 points={[15, data.height - 15, 15, 15]} // relative to the group's (0,0)
                 pointerLength={7}
                 pointerWidth={4}
@@ -52,7 +52,7 @@ export const StairTool = ({ data, id }: { data: any, id: string }) => {
                 fill="black"
                 stroke="black"
                 strokeWidth={1}
-            />
+            /> */}
 
         </Group>
     )

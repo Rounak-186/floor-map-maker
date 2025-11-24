@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from 'react'
-import FloorMapCard from '@/components/floopMapCard'
+import FloorMapCard from '@/components/ui/floopMapCard'
 import { Building2, Plus } from 'lucide-react';
-import MapCreatePopup from '@/components/mapCreatePopup';
-import CreateLable from '@/components/createLable';
+import MapCreatePopup from '@/components/ui/mapCreatePopup';
+import CreateLable from '@/components/ui/createLabel';
 
 
 export default function HomePage() {
